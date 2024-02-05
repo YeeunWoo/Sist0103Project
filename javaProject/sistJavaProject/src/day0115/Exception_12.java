@@ -1,0 +1,10 @@
+package day0115;
+
+public class Exception_12 {
+
+	public static void main(String[] args) {
+		System.out.println("프로그램 시작");
+		int num = 0;
+	}
+
+}
