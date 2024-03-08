@@ -19,7 +19,16 @@
 <jsp:setProperty property="*" name="dto"/>
 
 <%
+String[] hobbies=request.getParameterValues("hobby");
+String hobbiesString = "";
 
+if (hobbies != null && hobbies.length > 0) {
+ hobbiesString = String.join(",", hobbies);
+} else {
+    hobbiesString = "없음"; 
+}
+
+dto.setHobby(hobbiesString);
 
 //update
 dao.updateIntro(dto);
