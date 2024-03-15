@@ -48,7 +48,7 @@
         	   <td align="center"><%=no %></td>
         	   <td>
         	   <a href="content.jsp?num=<%=dto.getNum() %>" style="text-decoration: none; color: black;">
-        	   <img alt="" src="../save/<%=dto.getImgname()%>" style="width: 30px;">
+        	   <img src="../save/<%=dto.getImgname()%>" style="width: 30px;">
         	   <%=dto.getSubject() %></a>
         	   </td>
         	   <td><%=dto.getWriter() %></td>
