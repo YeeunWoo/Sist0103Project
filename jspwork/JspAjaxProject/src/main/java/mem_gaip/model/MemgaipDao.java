@@ -155,7 +155,7 @@ public class MemgaipDao {
 			Connection conn=db.getConnection();
 			PreparedStatement pstmt=null;
 			
-			String sql="update memgaip set m_id=?, m_pass=?, m_name=?, m_hp=?, m_photo=? where num=?";
+			String sql="update memgaip set m_id=?, m_pass=?, m_name=?, m_hp=? where num=?";
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -163,8 +163,7 @@ public class MemgaipDao {
 				pstmt.setString(2, dto.getM_pass());
 				pstmt.setString(3, dto.getM_name());
 				pstmt.setString(4, dto.getM_hp());
-				pstmt.setString(5, dto.getM_photo());
-				pstmt.setString(6, dto.getM_num());
+				pstmt.setString(5, dto.getM_num());
 				pstmt.execute();
 			} catch (SQLException e) {
 				e.printStackTrace();

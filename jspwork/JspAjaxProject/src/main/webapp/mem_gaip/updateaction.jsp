@@ -21,12 +21,6 @@
     String pass = request.getParameter("m_pass");
     String id = request.getParameter("m_id");
     String hp = request.getParameter("m_hp");
-    
-    // 파일 업로드를 위한 부분
-    String realPath = getServletContext().getRealPath("/upload");
-    int uploadSize = 1024 * 1024 * 5; // 5mb
-    MultipartRequest multi = null;
-    multi = new MultipartRequest(request, realPath, uploadSize, "utf-8", new DefaultFileRenamePolicy());
 
     MemgaipDao dao = new MemgaipDao();
     MemgaipDto dto = new MemgaipDto();
@@ -36,14 +30,7 @@
     dto.setM_pass(pass);
     dto.setM_id(id);
     dto.setM_hp(hp);
-
-    String photo = multi.getFilesystemName("m_photo");
-    if (photo == null) {
-        dto.setM_photo("../image/연예인사진/noimage.png"); // 기존의 사진 유지
-    } else {
-        dto.setM_photo("../upload/" + photo);
-    }
-
+	
     // 수정 메서드 호출
     dao.updateMem(dto);
 

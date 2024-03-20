@@ -22,7 +22,7 @@ MemgaipDto dto=dao.getData(num);
                 <caption align="top">
                     <b>회원정보 수정</b>
                 </caption>
-                <input type="hidden" name="m_num" value="<%=dto.getM_num()%>">
+                <input type="hidden" name="m_num" value="<%=num%>">
                 <tr>
                     <td width="120" class="table-primary">아이디</td>
                     <td>
