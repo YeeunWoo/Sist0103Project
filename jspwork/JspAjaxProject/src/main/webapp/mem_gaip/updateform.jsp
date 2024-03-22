@@ -11,7 +11,7 @@
 <title>회원정보 수정</title>
 </head>
 <%
-  String num=request.getParameter("num");
+String num=request.getParameter("num");
 MemgaipDao dao=new MemgaipDao();
 MemgaipDto dto=dao.getData(num);
 %>

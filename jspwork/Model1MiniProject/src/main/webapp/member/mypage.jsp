@@ -22,23 +22,28 @@
 MemberDao dao = new MemberDao();
 List<MemberDto> list = dao.getAllMembers();
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+String loginok = (String) session.getAttribute("loginok");
+String myid = (String) session.getAttribute("myid");
 %>
 <script type="text/javascript">
 	function delfunc(num) {
 		//alert(num);
 		$("#delnum").val(num);
 		$("#myModal").modal('show');
-		
-		$("button.btndel").click(function(){
-			
-			var num = $("#delnum").val();
-			var pass = $("#delpass").val();
-			// 비밀번호 확인을 위한 AJAX 요청
-			alert(num+","+pass);
-			//삭제파일 호출
-			location.href="member/deletemypage.jsp?num="+num+"&pass="+pass;
-			
-		})
+
+		$("button.btndel").click(
+				function() {
+
+					var num = $("#delnum").val();
+					var pass = $("#delpass").val();
+					// 비밀번호 확인을 위한 AJAX 요청
+					alert(num + "," + pass);
+					//삭제파일 호출
+					location.href = "member/deletemypage.jsp?num=" + num
+							+ "&pass=" + pass;
+
+				})
 
 	}
 </script>
@@ -52,6 +57,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			</caption>
 			<%
 			for (MemberDto dto : list) {
+				if (loginok != null && myid.equals(dto.getId())) {
 			%>
 			<tr>
 				<td rowspan="6" align="center" valign="middle"><img
@@ -59,7 +65,9 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				<td>회원명: <%=dto.getName()%>
 				</td>
 				<td rowspan="6" style="width: 200px" align="center" valign="middle">
-					<button type="button" class="btn btn-outline-info">수정</button>
+					<button type="button" class="btn btn-outline-info"
+       				onclick="location.href='index.jsp?main=member/updatepassform.jsp&num=<%=dto.getNum()%>'">수정</button>
+
 					<button type="button" class="btn btn-outline-danger"
 						onclick="delfunc('<%=dto.getNum()%>')">탈퇴</button>
 				</td>
@@ -80,6 +88,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				<td>가입일: <%=sdf.format(dto.getGaipday())%></td>
 			</tr>
 			<%
+				}
 			}
 			%>
 
@@ -99,8 +108,9 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 				<!-- Modal body -->
 				<div class="modal-body d-inline-flex">
-					<input type="hidden" id="delnum"> <b>삭제비밀번호: </b> 
-					<input type="password" id="delpass" class="form-control" style="width: 120px; margin-left: 10px">
+					<input type="hidden" id="delnum"> <b>삭제비밀번호: </b> <input
+						type="password" id="delpass" class="form-control"
+						style="width: 120px; margin-left: 10px">
 				</div>
 
 				<!-- Modal footer -->

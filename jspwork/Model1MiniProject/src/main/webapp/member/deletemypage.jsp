@@ -10,7 +10,18 @@ boolean isEqualPass = dao.isEqualPass(num, pass); // 비밀번호 일치 여부 
 if (isEqualPass) {
 	// 비밀번호가 일치하면 회원 삭제 작업 수행
 	dao.deleteMember(num);
-	response.sendRedirect("../index.jsp?main=member/memberlist.jsp");
+	//세션삭제
+	session.removeAttribute("loginok");
+	session.removeAttribute("myid");
+	session.removeAttribute("saveok");
+	%>
+	<script type="text/javascript">
+		alert("탈퇴성공");
+		location.href="../index.jsp";
+	</script>
+	
+<%
+	//response.sendRedirect("../index.jsp?main=member/memberlist.jsp");
 } else {%>
 	// 비밀번호가 일치하지 않으면 메인 페이지로 이동
 	<script type="text/javascript">
