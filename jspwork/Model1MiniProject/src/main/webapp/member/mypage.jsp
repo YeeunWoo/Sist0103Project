@@ -25,6 +25,12 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 String loginok = (String) session.getAttribute("loginok");
 String myid = (String) session.getAttribute("myid");
+
+//로그인 상태인지 확인
+if (loginok == null) {
+ // 로그인 상태가 아니라면 로그인 페이지로 리다이렉트
+ response.sendRedirect("index.jsp?main=login/loginmain.jsp");
+}
 %>
 <script type="text/javascript">
 	function delfunc(num) {

@@ -12,6 +12,15 @@
         /* 추가적인 CSS 스타일링 */
     </style>
 </head>
+<%
+  String mainPage="layout/main.jsp"; //기본페이지
+  
+  //url을 통해서 main값을 읽어서 메인페이지에 출력한다
+  if(request.getParameter("main")!=null)
+  {
+	  mainPage=request.getParameter("main");
+  }
+%>
 <body>
     <header>
         <!-- 네비게이션 바 등의 헤더 내용 -->
@@ -19,7 +28,7 @@
     </header>
 
     <!-- main 부분 include -->
-    <jsp:include page="layout/main.jsp"/>
+    <jsp:include page="<%=mainPage %>"/>
 
     <!-- footer 부분 include -->
     <jsp:include page="layout/info.jsp"/>

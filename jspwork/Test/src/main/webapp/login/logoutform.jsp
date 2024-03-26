@@ -1,4 +1,4 @@
-<%@page import="data.dao.MemberDao"%>
+<%@page import="data.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 	<img src="image/K-060.png">
 <%
 String myid=(String)session.getAttribute("myid");
-MemberDao dao = new MemberDao();
+UserDao dao = new UserDao();
 String name = dao.getName(myid);
 %>
 <br><br>

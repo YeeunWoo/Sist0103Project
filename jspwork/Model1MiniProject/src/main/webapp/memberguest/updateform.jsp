@@ -1,3 +1,5 @@
+<%@page import="data.dto.GuestDto"%>
+<%@page import="data.dao.GuestDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -33,16 +35,29 @@
 	}
 </script>
 </head>
+<%
+   //num,currentPage
+   String num=request.getParameter("num");
+   String currentPage=request.getParameter("currentPage");
+   
+   GuestDao dao=new GuestDao();
+   GuestDto dto=dao.getData(num);
+%>
 <body>
 
 <!-- 이미지미리보기 -->
-<img id="showimg" style="position: absolute; left: 800px; top: 100px; max-width: 200px;">
+<img id="showimg" style="position: absolute; left: 800px; top: 100px; max-width: 200px;"
+src="<%=(dto.getPhotoname()==null?"":"save/"+dto.getPhotoname())%>">
 
 <div style="margin: 50px 100px; width: 600px;">
-   <form action="memberguest/guestaction.jsp" method="post" enctype="multipart/form-data">
+   <form action="memberguest/updateaction.jsp" method="post" enctype="multipart/form-data">
+      
+      <!--num hidden: 페이징처리시는 currentPage도 hidden처리  -->
+      <input type="hidden" name="num" value="<%=num%>">
+      <input type="hidden" name="currentPage" value="<%=currentPage%>">
       <table class="table table-bordered">
         <caption align="top">
-          <b>방명록 등록</b>&nbsp;&nbsp;
+          <b>방명록 수정</b>&nbsp;&nbsp;
           <i class="bi bi-camera fs-2 camera"></i>
           <input type="file" name="photo" id="photo" style="visibility: hidden;" 
           onchange="readURL(this)">
@@ -52,11 +67,11 @@
           <td>
             <textarea style="width: 500px; height: 100px;"
             name="content" class="from-control"
-            required="required"></textarea>
+            required="required"><%=dto.getContent() %></textarea>
           </td>
           <td>
-            <button type="submit" class="btn btn-info"
-            style="width: 100px; height: 100px;">등록</button>
+            <button type="submit" class="btn btn-warning"
+            style="width: 100px; height: 100px;">수정</button>
           </td>
         </tr>
       </table>

@@ -14,14 +14,14 @@
       position: absolute;
   }
   
-  div.title{
+/*   div.title{
      width: 100%;
      height: 80px;
      line-height: 80px;
      font-size: 20pt;
      font-family: 'Noto Serif KR';
      text-align: center;
-  }
+  } */
   
   div.menu{
     width: 100%;
@@ -30,32 +30,32 @@
     font-size: 20px;
     font-family: 'Noto Serif KR';
     text-align: center;
-    top: 90px;
   }
   
-  div.info{
+/*   div.info{
     width: 250px;
     height: 300px;
     line-height: 10px;
     font-size: 15pt;
     font-family: 'Noto Serif KR';
+    position: fixed;
+    bottom: 0;
     left: 50px;
-    top: 300px;
-    border: 5px groove purple;
+    border: 5px groove gray;
     border-radius: 30px;
     padding: 20px 20px;
     
-  }
+  } */
   
   div.main{
   
-     width: 1600px;
+     width: 1200px;
      height: 700px;
      font-size: 12pt;
      color:gray;
      font-family: 'Noto Serif KR';
      left: 400px;
-     top: 200px;
+     top: 110px;
   }
 
 </style>
@@ -70,17 +70,15 @@
   }
 %>
 <body>
-<div class="layout title">
-   <jsp:include page="layout/title.jsp"/>
-</div>
 <div class="layout menu">
    <jsp:include page="layout/menu.jsp"/>
 </div>
-<div class="layout info">
+<%-- <div class="layout info">
    <jsp:include page="layout/info.jsp"/>
-</div>
-<div class="layout main">
+</div> --%>
+<div class="layout main" style="left: 50%; transform: translateX(-50%);">
    <jsp:include page="<%=mainPage %>"/>
 </div>
+
 </body>
 </html>
