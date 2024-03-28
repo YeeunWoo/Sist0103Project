@@ -55,7 +55,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="index.jsp?main=memberguest/guestlist.jsp">회원방명록</a></li>
-                            <li><a class="dropdown-item" href="#">Medium Image</a></li>
+                            <li><a href="index.jsp?main=smartboard/boardlist.jsp"><i class="dropdown-item"></i> 스마트게시판</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
