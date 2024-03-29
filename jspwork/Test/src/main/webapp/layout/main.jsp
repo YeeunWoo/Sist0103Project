@@ -21,7 +21,7 @@
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">카테고리 2</h5>
-                        <p class="card-text">카테고리 2에 대한 간단한 설명이 들어갈 수 있습니다.</p>
+                        <p class="card-text">카테고리 2에 대한 간단한 설명이 들어갈 수 있습니다...</p>
                         <a href="#" class="btn btn-primary">자세히 보기</a>
                     </div>
                 </div>
