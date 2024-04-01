@@ -38,6 +38,21 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Shop
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        	<%
+                        	if(loginok!=null&&myid.equals("admin")){%>
+                        		<li><a class="dropdown-item" href="index.jsp?main=shop/addform.jsp"><i class="icon-wrench"></i> 상품등록</a></li>
+                        	<%}else{%>
+                        		<li><a class="dropdown-item" href="index.jsp?main=shop/shoplist.jsp"><i class="icon-credit-card"></i> 상품목록</a></li>
+                        	<%}
+                        	%>
+                            
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             회원
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
