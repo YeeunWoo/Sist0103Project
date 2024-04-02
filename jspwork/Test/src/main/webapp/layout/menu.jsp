@@ -1,4 +1,3 @@
-<%@page import="data.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
@@ -34,16 +33,7 @@ String myid=(String)session.getAttribute("myid");
 		<ul class="navbar-nav">
 			<li class="nav-item">
 				<%
-				UserDao dao = new UserDao();
-				String name = dao.getName(myid);
-
-				if (loginok == null) {
-				%> <a class="nav-link" href="index.jsp?main=login/loginform.jsp">로그인</a>
-				<%
-				} else {
-				%> <b><%=name%>님</b> <a class="nav-link"
-				href="login/logoutaction.jsp">로그아웃</a> <%
-				}
+				//로그인
 				%>
 			</li>
 		</ul>
