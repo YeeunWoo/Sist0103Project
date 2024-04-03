@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class DbConnect {
 
 	static final String MYSQLDRIVER="com.mysql.cj.jdbc.Driver";
-	static final String MYSQL_URL="jdbc:mysql://localhost:3306/my";
+	static final String MYSQL_URL="jdbc:mysql://mozyhome.cvg4y8a4acvj.ap-northeast-2.rds.amazonaws.com:3306/mozyhome";
 	
 	public DbConnect() {
 		try {
@@ -29,7 +29,7 @@ public class DbConnect {
 		Connection conn=null;
 		
 		try {
-			conn=DriverManager.getConnection(MYSQL_URL, "angel", "1234");
+			conn=DriverManager.getConnection(MYSQL_URL, "admin_mozyhome", "mozy1234");
 			System.out.println("MYSQL계정연결성공");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

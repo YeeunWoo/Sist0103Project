@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class DbConnect {
 
 	static final String MYSQLDRIVER="com.mysql.cj.jdbc.Driver";
-	static final String MYSQL_URL="jdbc:mysql://localhost:3306/furnituremalldb";
+	static final String MYSQL_URL="jdbc:mysql://localhost:3306/my";
 	
 	public DbConnect() {
 		try {
@@ -26,7 +26,7 @@ public class DbConnect {
 		Connection conn=null;
 		
 		try {
-			conn=DriverManager.getConnection(MYSQL_URL, "yeeun", "1234");
+			conn=DriverManager.getConnection(MYSQL_URL, "angel", "1234");
 			System.out.println("MYSQL계정연결성공");
 		} catch (SQLException e) {
 			e.printStackTrace();
