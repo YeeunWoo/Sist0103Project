@@ -29,8 +29,9 @@
 <body>
 <h2>주문/결제</h2>
 
-<form action="orderaction.jsp" method="post">  
+<form action="orderAction.jsp" method="post">  
     <h3>배송지</h3>
+    회원번호: <input type="text" name="mem_num" required><br>
     받는 사람: <input type="text" name="order_name" required><br>
     휴대폰: <input type="text" name="order_hp" required><br>
     <input type="text" id="postcode" name="order_zipcode" placeholder="우편번호" readonly required>
