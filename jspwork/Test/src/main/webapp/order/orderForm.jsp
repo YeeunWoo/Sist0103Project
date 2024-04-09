@@ -24,6 +24,17 @@
             }
         }).open();
     }
+    
+    function showBankInfo() {
+        var paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+        var bankInfoDiv = document.getElementById("bankInfo");
+        if (paymentMethod === "bank_transfer") {
+            bankInfoDiv.style.display = "block";
+        } else {
+            bankInfoDiv.style.display = "none";
+        }
+    }
 </script>
 </head>
 <body>
@@ -42,10 +53,16 @@
     배송메세지: <textarea name="order_delivery_request"></textarea><br>
     
     <h3>결제 수단</h3>
-    <input type="radio" name="payment_method" value="credit_card" required>신용카드<br>
-    <input type="radio" name="payment_method" value="bank_transfer" required>무통장입금<br>
+    <input type="radio" name="payment_method" value="credit_card" onclick="showBankInfo()" required>신용카드<br>
+    <input type="radio" name="payment_method" value="bank_transfer" onclick="showBankInfo()" required>무통장입금<br>
+    
+    <div id="bankInfo" style="display: none;">
+        입금은행: <input type="text" name="bank_name"><br>
+        입금자명: <input type="text" name="depositor_name"><br>
+    </div>
     
     <button type="submit">주문하기</button>
+    
 </form>
 
 </body>

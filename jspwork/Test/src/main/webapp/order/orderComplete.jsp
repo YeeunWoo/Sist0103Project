@@ -10,6 +10,6 @@
 <title>주문완료</title>
 </head>
 <body>
-주문완료
+고객님의 주문이 완료되었습니다
 </body>
 </html>
