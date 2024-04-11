@@ -23,8 +23,8 @@ String paymentMethod = request.getParameter("payment_method"); // 결제수단
 //임시 설정
 int orderDeliveryFee = 0; // 배송비
 int orderTotalPayment = 100; // 총 결제 금액
-int orderDetailSu = 3; // 수량
-String proNum = "3"; // 상품번호
+int orderDetailSu = 1; // 수량
+String proNum = "4"; // 상품번호
 
 // 주문 번호 생성(날짜+순번)
 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -33,7 +33,8 @@ OrderDao Orderdao = new OrderDao();
 int todayOrderCount = Orderdao.getOrderCountForToday() + 1;
 String newOrderNumber = today + String.format("%04d", todayOrderCount);
 
-if (paymentMethod.equals("credit_card")) { // 카드결제 시
+if (paymentMethod.equals("credit_card")) { 
+	// 카드 결제 처리
 %>
 <!-- 포트원 결제 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
@@ -56,9 +57,10 @@ if (paymentMethod.equals("credit_card")) { // 카드결제 시
 		// callback
 		//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
 		if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-
+			//console.log(rsp);
             <%
             orderStatus = "결제완료";
+		
             //OrderDto 객체 생성 및 데이터 설정
             OrderDto orderDto = new OrderDto();
             orderDto.setOrderNum(newOrderNumber);
@@ -85,42 +87,45 @@ if (paymentMethod.equals("credit_card")) { // 카드결제 시
             orderDetailDao.insertOrder(orderDetailDto);
             %>
             
+            // 결제 성공 후 리다이렉트
+            location.href="orderComplete.jsp";
         } else {
-        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+        	 console.log(rsp);
         }
 	});
 </script>
 <%
 
 } else if (paymentMethod.equals("bank_transfer")) {
-orderStatus = "입금대기";
-//OrderDto 객체 생성 및 데이터 설정
-OrderDto orderDto = new OrderDto();
-orderDto.setOrderNum(newOrderNumber);
-orderDto.setMemNum(memNum);
-orderDto.setOrderStatus(orderStatus);
-orderDto.setOrderDeliveryRequest(orderDeliveryRequest);
-orderDto.setOrderAddr(orderAddress);
-orderDto.setOrderName(orderName);
-orderDto.setOrderHp(orderHp);
-orderDto.setOrderDeliveryFee(orderDeliveryFee);
-orderDto.setOrderTotalPayment(orderTotalPayment);
-
-//DAO를 이용한 데이터베이스 저장
-Orderdao.insertOrder(orderDto);
-
-//주문 상세(OrderDetailDto) 정보 저장
-OrderDetailDto orderDetailDto = new OrderDetailDto();
-orderDetailDto.setMemNum(memNum);
-orderDetailDto.setProNum(proNum);
-orderDetailDto.setOrderNum(newOrderNumber);
-orderDetailDto.setOrderDetailSu(orderDetailSu);
-
-OrderDetailDao orderDetailDao = new OrderDetailDao();
-orderDetailDao.insertOrder(orderDetailDto);
-
-//주문 처리 후 리다이렉트 또는 메시지 출력 등 후속 처리
-response.sendRedirect("orderComplete.jsp"); // 주문 완료 페이지 혹은 메인 페이지로 리다이렉트
+	// 무통장입금 결제 처리
+	orderStatus = "입금대기";
+	
+	// 주문 정보 저장
+	OrderDto orderDto = new OrderDto();
+	orderDto.setOrderNum(newOrderNumber);
+	orderDto.setMemNum(memNum);
+	orderDto.setOrderStatus(orderStatus);
+	orderDto.setOrderDeliveryRequest(orderDeliveryRequest);
+	orderDto.setOrderAddr(orderAddress);
+	orderDto.setOrderName(orderName);
+	orderDto.setOrderHp(orderHp);
+	orderDto.setOrderDeliveryFee(orderDeliveryFee);
+	orderDto.setOrderTotalPayment(orderTotalPayment);
+	
+	Orderdao.insertOrder(orderDto);
+	
+	// 주문 상세 정보 저장
+	OrderDetailDto orderDetailDto = new OrderDetailDto();
+	orderDetailDto.setMemNum(memNum);
+	orderDetailDto.setProNum(proNum);
+	orderDetailDto.setOrderNum(newOrderNumber);
+	orderDetailDto.setOrderDetailSu(orderDetailSu);
+	
+	OrderDetailDao orderDetailDao = new OrderDetailDao();
+	orderDetailDao.insertOrder(orderDetailDto);
+	
+	//주문 처리 후 리다이렉트 또는 메시지 출력 등 후속 처리
+	response.sendRedirect("orderComplete.jsp");
 }
 %>
 
