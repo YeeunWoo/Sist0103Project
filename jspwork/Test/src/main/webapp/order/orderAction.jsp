@@ -10,34 +10,32 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-//주문 정보 파라미터 받기
-String memNum = request.getParameter("mem_num");
-String orderName = request.getParameter("order_name");
-String orderStatus = "입금전";
-String orderHp = request.getParameter("order_hp");
-String orderZipcode = request.getParameter("order_zipcode");
-String orderAddr = request.getParameter("order_addr");
-String orderAddressDetail = request.getParameter("order_address_detail");
-String orderAddress = orderZipcode + orderAddr + orderAddressDetail;
-String orderDeliveryRequest = request.getParameter("order_delivery_request");
-int orderDeliveryFee = 0;
-int orderTotalPayment = 3850000;
-int orderDetailSu = 3;
-String proNum = "5";
+String orderStatus = ""; // 주문상태
 
-//주문 번호 생성
+// 주문 정보 파라미터 받기
+String memNum = request.getParameter("mem_num"); // 회원번호
+String orderName = request.getParameter("order_name"); // 받는 분 이름
+String orderHp = request.getParameter("order_hp");  // 받는 분 연락처 
+String orderDeliveryRequest = request.getParameter("order_delivery_request"); // 배송요청사항
+String orderAddress = request.getParameter("order_zipcode") + " " + request.getParameter("order_addr") + " " +request.getParameter("order_address_detail"); // 받는 분 주소
+String paymentMethod = request.getParameter("payment_method"); // 결제수단
+
+//임시 설정
+int orderDeliveryFee = 0; // 배송비
+int orderTotalPayment = 100; // 총 결제 금액
+int orderDetailSu = 3; // 수량
+String proNum = "3"; // 상품번호
+
+// 주문 번호 생성(날짜+순번)
 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 String today = sdf.format(new Date());
-
 OrderDao Orderdao = new OrderDao();
 int todayOrderCount = Orderdao.getOrderCountForToday() + 1;
 String newOrderNumber = today + String.format("%04d", todayOrderCount);
 
-String paymentMethod = request.getParameter("payment_method");
-
-if (paymentMethod.equals("credit_card")) {
-	//out.println("신용카드로 결제합니다.");
+if (paymentMethod.equals("credit_card")) { // 카드결제 시
 %>
+<!-- 포트원 결제 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 	IMP.init('imp30782762');
@@ -45,9 +43,10 @@ if (paymentMethod.equals("credit_card")) {
 	IMP.request_pay({
 		pg : "html5_inicis.INIpayTest",
 		pay_method : "card",
-		merchant_uid : "<%=paymentMethod%>", // 주문번호
+		merchant_uid : "<%=newOrderNumber%>", // 주문번호
 		name : "주문명:결제테스트",
-		amount : 100, // 숫자 타입
+		amount : <%=orderTotalPayment%>,
+		//구매자 정보 ↓
 		buyer_email : "gildong@gmail.com",
 		buyer_name : "홍길동",
 		buyer_tel : "010-4242-4242",
@@ -56,13 +55,45 @@ if (paymentMethod.equals("credit_card")) {
 	}, function(rsp) {
 		// callback
 		//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-		
+		if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+
+            <%
+            orderStatus = "결제완료";
+            //OrderDto 객체 생성 및 데이터 설정
+            OrderDto orderDto = new OrderDto();
+            orderDto.setOrderNum(newOrderNumber);
+            orderDto.setMemNum(memNum);
+            orderDto.setOrderStatus(orderStatus);
+            orderDto.setOrderDeliveryRequest(orderDeliveryRequest);
+            orderDto.setOrderAddr(orderAddress);
+            orderDto.setOrderName(orderName);
+            orderDto.setOrderHp(orderHp);
+            orderDto.setOrderDeliveryFee(orderDeliveryFee);
+            orderDto.setOrderTotalPayment(orderTotalPayment);
+
+            //DAO를 이용한 데이터베이스 저장
+            Orderdao.insertOrder(orderDto);
+            
+            //주문 상세(OrderDetailDto) 정보 저장
+            OrderDetailDto orderDetailDto = new OrderDetailDto();
+            orderDetailDto.setMemNum(memNum);
+            orderDetailDto.setProNum(proNum);
+            orderDetailDto.setOrderNum(newOrderNumber);
+            orderDetailDto.setOrderDetailSu(orderDetailSu);
+
+            OrderDetailDao orderDetailDao = new OrderDetailDao();
+            orderDetailDao.insertOrder(orderDetailDto);
+            %>
+            
+        } else {
+        	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+        }
 	});
 </script>
-
 <%
+
 } else if (paymentMethod.equals("bank_transfer")) {
-out.println("무통장입금으로 결제합니다.");
+orderStatus = "입금대기";
 //OrderDto 객체 생성 및 데이터 설정
 OrderDto orderDto = new OrderDto();
 orderDto.setOrderNum(newOrderNumber);
