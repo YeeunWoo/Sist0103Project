@@ -1,17 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="data.dao.OrderDetailDao"%>
 <%@page import="data.dto.OrderDetailDto"%>
 <%@page import="java.util.Date"%>
 <%@page import="data.dao.OrderDao"%>
 <%@page import="data.dto.OrderDto"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 
 <%
 request.setCharacterEncoding("utf-8");
 
 String orderStatus = ""; // 주문상태
-
+	
 // 주문 정보 파라미터 받기
 String memNum = request.getParameter("mem_num"); // 회원번호
 String orderName = request.getParameter("order_name"); // 받는 분 이름
@@ -23,8 +23,8 @@ String paymentMethod = request.getParameter("payment_method"); // 결제수단
 //임시 설정
 int orderDeliveryFee = 0; // 배송비
 int orderTotalPayment = 100; // 총 결제 금액
-int orderDetailSu = 1; // 수량
-String proNum = "4"; // 상품번호
+int orderDetailSu = 3; // 수량
+String proNum = "2"; // 상품번호
 
 // 주문 번호 생성(날짜+순번)
 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -56,11 +56,9 @@ if (paymentMethod.equals("credit_card")) {
 	}, function(rsp) {
 		// callback
 		//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-		if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-			//console.log(rsp);
+		if (rsp.success) { // 결제 성공 시
             <%
             orderStatus = "결제완료";
-		
             //OrderDto 객체 생성 및 데이터 설정
             OrderDto orderDto = new OrderDto();
             orderDto.setOrderNum(newOrderNumber);
@@ -86,9 +84,8 @@ if (paymentMethod.equals("credit_card")) {
             OrderDetailDao orderDetailDao = new OrderDetailDao();
             orderDetailDao.insertOrder(orderDetailDto);
             %>
-            
             // 결제 성공 후 리다이렉트
-            location.href="orderComplete.jsp";
+            location.href="orderComplete.jsp?orderNumber=<%= newOrderNumber %>";
         } else {
         	 console.log(rsp);
         }
@@ -125,7 +122,6 @@ if (paymentMethod.equals("credit_card")) {
 	orderDetailDao.insertOrder(orderDetailDto);
 	
 	//주문 처리 후 리다이렉트 또는 메시지 출력 등 후속 처리
-	response.sendRedirect("orderComplete.jsp");
+	response.sendRedirect("orderComplete.jsp?orderNumber=" + newOrderNumber);
 }
 %>
-

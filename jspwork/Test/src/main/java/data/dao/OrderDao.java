@@ -59,4 +59,41 @@ public class OrderDao {
 			db.dbClose(pstmt, conn);
 		}
 	}
+	
+	//주문번호에 대한 dto반환
+	public OrderDto getOneData(String num){
+		OrderDto dto=new OrderDto();
+		
+		Connection conn=db.getConnection();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		String sql="select * from order_info where order_num=?";
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next())
+			{
+				dto.setOrderNum(rs.getString("order_num"));
+	            dto.setMemNum(rs.getString("mem_num"));
+	            dto.setOrderDate(rs.getTimestamp("order_date"));
+	            dto.setOrderStatus(rs.getString("order_status"));
+	            dto.setOrderDeliveryRequest(rs.getString("order_delivery_request"));
+	            dto.setOrderAddr(rs.getString("order_addr"));
+	            dto.setOrderName(rs.getString("order_name"));
+	            dto.setOrderHp(rs.getString("order_hp"));
+	            dto.setOrderDeliveryFee(rs.getInt("order_delivery_fee"));
+	            dto.setOrderTotalPayment(rs.getInt("order_total_payment"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			db.dbClose(rs, pstmt, conn);
+		}
+		
+		return dto;
+	}
 }

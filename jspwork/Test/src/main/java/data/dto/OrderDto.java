@@ -75,4 +75,3 @@ public class OrderDto {
 		this.orderTotalPayment = orderTotalPayment;
 	}  
 }
-
