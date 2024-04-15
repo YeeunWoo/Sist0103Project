@@ -62,7 +62,7 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 17px;
-    color: var(--dark-1-color);
+    color: #141414;
 }
 
 .order_top .order_detail {
@@ -88,7 +88,7 @@
     justify-content: flex-start;
     padding: 4px 16px;
     border-radius: 4px;
-    border: 1px solid var(--gray-2-color);
+    border: 1px solid #ECECEC;
     box-sizing: border-box;
     background: white;
     width: 100%;
@@ -104,8 +104,8 @@
 }
 
 .order_body .body_main {
-    border-bottom: 1px solid var(--gray-2-color);
-    border-top: 1px solid var(--gray-2-color);
+    border-bottom: 1px solid #ECECEC;
+    border-top: 1px solid #ECECEC;
     column-gap: 16px;
     padding: 12px 0;
     display: flex;
@@ -140,7 +140,7 @@
     width: 70%;
     font-size: 12px;
     line-height: 14px;
-    color: var(--gray-5-color);
+    color: #929292;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -159,7 +159,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-    color: var(--gray-6-color);
+    color: #616161;
 }
 
 .body_main .info .price p:first-child::after {
@@ -170,7 +170,7 @@
     height: 12px;
     top: 2px;
     right: -10px;
-    background: var(--gray-4-color);
+    background: #C7C7C7;
 }
 
 .order_foot {
@@ -185,7 +185,7 @@
     font-size: 14px;
     font-weight: 600;
     line-height: 17px;
-    color: var(--orange-color);
+    color: #EA6000;
 }
 
 .order_foot .order_update {
@@ -198,7 +198,7 @@
 .order_foot .order_update a {
     font-size: 12px;
     line-height: 14px;
-    color: var(--gray-5-color);
+    color: #929292;
     text-decoration: underline;
 }
 
@@ -250,54 +250,56 @@ page-title {
 					       		</tr>
 					       	</thead>
 					       	<tbody class="center order_tbody ">
+					       		<% 
+							       	// mem_num 파라미터로부터 회원 번호를 가져옴
+						            String memNum = request.getParameter("mem_num");
+					       			
+					                // 주문 목록을 가져오는 부분 (실제 데이터베이스에서 가져와야 함)
+					                OrderDao orderDao = new OrderDao();
+					                List<OrderDto> orderList = orderDao.getOrdersByMember(memNum);
+					                
+					                // 각 주문을 테이블에 표시
+					                for (OrderDto order : orderList) {
+					            %>
 					       		<tr class="order_tr xans-record-">
 									<td class="order_td">
 				                    	<div class="order_top">
-				                                    <p class="order_date">2024-04-12</p>
-				                                    <a href="detail.html?order_id=20240412-0000067&page=1&history_start_date=2024-01-16&history_end_date=2024-04-15" class="order_detail">
+				                                    <p class="order_date"><%= new SimpleDateFormat("yyyy-MM-dd").format(order.getOrderDate()) %></p>
+				                                    <a href="#" class="order_detail">
 				                                        <span>상세보기</span>
 				                                        <svg width="18" height="18" viewbox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.05002 12.95L6.52502 12.425L9.97502 8.975L6.52502 5.525L7.05002 5L11.025 8.975L7.05002 12.95Z" fill="black"></path></svg></a>
 				                        </div>
 				                        <div class="order_body">
-				                            <a href="detail.html?order_id=20240412-0000067&page=1&history_start_date=2024-01-16&history_end_date=2024-04-15" class="order_id">주문번호 : 20240412-0000067</a>
+				                            <a href="#" class="order_id">주문번호 : <%= order.getOrderNum() %></a>
 				                            <div class="body_main">
-				                                <a href="/product/detail.html?product_no=14801&cate_no=1"><img src="//chapterone.kr/web/product/medium/202309/ac97da66d15746c87117b226dac32713.png" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a>
+				                                <a href="/product/detail.html?product_no=14801&cate_no=1"><img src="https://via.placeholder.com/150" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a>
 				                                <div class="info">
 				                                    <p class="product_name">미니 손잡이 와인쿨러</p>
 				                                    <p class="product_option">[5-6주 제작 기간이 소요됩니다. 확인 후 구매 부탁드립니다. : 1]</p>
 				                                    <div class="price">
-				                                        <p>&#8361;380,000</p>
+				                                        <p>&#8361;<%= order.getOrderTotalPayment() %></p>
 				                                        <p>1개</p>
 				                                    </div>
 				                                </div>
 				                            </div>
 				                            <div class="order_foot">
-				                                <p class="order_status">입금전</p>
+				                                <p class="order_status"><%= order.getOrderStatus() %></p>
 				                                <div class="order_update ">
-				                                    <a href="#" class="btnNormal displaynone" onclick="">배송조회</a>
-				                                    <a href="#" class="btnNormal displaynone" onclick="">취소철회</a>
-				                                    <a href="#" class="btnNormal displaynone" onclick="">주문취소</a>
-				                                    <a href="#" class="btnNormal displaynone">취소신청</a>
-				                                    <a href="#" class="btnNormal displaynone">교환신청</a>
-				                                    <a href="#" class="btnNormal displaynone">반품신청</a>
-				                                    <a href="#" class="btnSubmit displaynone">구매후기</a>
+				                                	<% 
+					                                    if (order.getOrderStatus().equals("입금대기")) { 
+					                                %>
+				                                		<a href="#" class="btnNormal">취소신청</a>
+				                                	<% } else if (order.getOrderStatus().equals("배송중")) { %>	
+				                                		<a href="#" class="btnNormal">배송조회</a>
+				                                	<% } else if (order.getOrderStatus().equals("배송완료")) { %>
+					                                	<a href="#" class="btnNormal">구매후기</a>
+	                                				<% } %>
 				                                </div>
 				                            </div>
 				                        </div>
 				                    </td>
-					                <!-- <td class="state">
-					                    <p class="displaynone"><a href="#" target="_self"></a></p>
-					                    <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
-					
-					
-					                    <a href="#none" class="btnNormal displaynone" onclick="OrderHistory.withdraw('E','20240412-0000067|14801|000A|172861','F', 'F', 'F', 'T' , 'T')">교환철회</a>
-					                    <a href="#none" class="btnNormal displaynone" onclick="OrderHistory.withdraw('R','20240412-0000067|14801|000A|172861','F', 'F', 'F', 'T' , 'T')">반품철회</a>
-					                </td> -->
-					                <!-- <td>
-					                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="OrderHistory.getDetailInfo('?product_no=14801&cate_no=1&order_id=20240412-0000067&ord_item_code=20240412-0000067-01');">상세정보</a></p>
-					                    <p class="">-</p>
-					                </td> -->
 				            	</tr>
+				            	<% } %>
 					       	</tbody>
 						</table>
 					</div>
@@ -311,42 +313,6 @@ page-title {
 
 
 
-
-
-
-
-
-	<!--  <div class="container mt-5">
-	    <h2>주문 목록</h2>
-	    
-	    <table class="table table-striped mt-3">
-	        <thead>
-	            <tr>
-	                <th>주문 번호</th>
-	                <th>주문 일자</th>
-	                <th>주문 상태</th>
-	                <th>주문 총액</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <% 
-	                // 주문 목록을 가져오는 부분 (실제 데이터베이스에서 가져와야 함)
-	                OrderDao orderDao = new OrderDao();
-	                List<OrderDto> orderList = orderDao.getAllOrders();
-	                
-	                // 각 주문을 테이블에 표시
-	                for (OrderDto order : orderList) {
-	            %>
-	            <tr>
-	                <td><%= order.getOrderNum() %></td>
-	                <td><%= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(order.getOrderDate()) %></td>
-	                <td><%= order.getOrderStatus() %></td>
-	                <td><%= order.getOrderTotalPayment() %></td>
-	            </tr>
-	            <% } %>
-	        </tbody>
-	    </table>
-	</div>-->
 
 </body>
 </html>

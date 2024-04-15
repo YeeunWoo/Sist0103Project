@@ -99,7 +99,7 @@ public class OrderDao {
 		return dto;
 	}
 	
-	// 모든 주문을 가져오는 메서드
+	// 모든 주문을 가져오는 메서드 (삭제 예정)
     public List<OrderDto> getAllOrders() {
         List<OrderDto> orderList = new ArrayList<>();
         Connection conn = db.getConnection();
@@ -135,4 +135,82 @@ public class OrderDao {
 
         return orderList;
     }
+    
+    // 특정 회원의 주문을 가져오는 메서드 (삭제 예정)
+//    public List<OrderDto> getOrdersByMember(String memNum) {
+//        List<OrderDto> orderList = new ArrayList<>();
+//        Connection conn = db.getConnection();
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//
+//        String sql = "SELECT * FROM order_info WHERE mem_num = ?";
+//
+//        try {
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, memNum);
+//            rs = pstmt.executeQuery();
+//
+//            // 결과를 OrderDto 객체로 변환하여 리스트에 추가
+//            while (rs.next()) {
+//                OrderDto order = new OrderDto();
+//                order.setOrderNum(rs.getString("order_num"));
+//                order.setMemNum(rs.getString("mem_num"));
+//                order.setOrderDate(rs.getTimestamp("order_date"));
+//                order.setOrderStatus(rs.getString("order_status"));
+//                order.setOrderDeliveryRequest(rs.getString("order_delivery_request"));
+//                order.setOrderAddr(rs.getString("order_addr"));
+//                order.setOrderName(rs.getString("order_name"));
+//                order.setOrderHp(rs.getString("order_hp"));
+//                order.setOrderDeliveryFee(rs.getInt("order_delivery_fee"));
+//                order.setOrderTotalPayment(rs.getInt("order_total_payment"));
+//                orderList.add(order);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            db.dbClose(rs, pstmt, conn);
+//        }
+//
+//        return orderList;
+//    }
+    
+    // 회원 번호를 기준으로 주문 목록을 가져오는 메서드
+    public List<OrderDto> getOrdersByMember(String memNum) {
+        List<OrderDto> orderList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM order_info WHERE mem_num = ?";
+
+        try {
+            conn = db.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, memNum);
+            rs = pstmt.executeQuery();
+
+            // 결과를 OrderDto 객체로 변환하여 리스트에 추가
+            while (rs.next()) {
+                OrderDto order = new OrderDto();
+                order.setOrderNum(rs.getString("order_num"));
+                order.setMemNum(rs.getString("mem_num"));
+                order.setOrderDate(rs.getTimestamp("order_date"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderDeliveryRequest(rs.getString("order_delivery_request"));
+                order.setOrderAddr(rs.getString("order_addr"));
+                order.setOrderName(rs.getString("order_name"));
+                order.setOrderHp(rs.getString("order_hp"));
+                order.setOrderDeliveryFee(rs.getInt("order_delivery_fee"));
+                order.setOrderTotalPayment(rs.getInt("order_total_payment"));
+                orderList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.dbClose(rs, pstmt, conn);
+        }
+
+        return orderList;
+    }
+
 }

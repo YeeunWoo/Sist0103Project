@@ -14,6 +14,12 @@ public class OrderDto {
     private int orderDeliveryFee;
     private int orderTotalPayment;
     
+    //상품 추가
+    private String productName;
+    private String productSize;
+    private String productColor;
+    private int productSu;
+    
 	public String getOrderNum() {
 		return orderNum;
 	}
