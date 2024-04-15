@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import data.dto.OrderDto;
 import mysql.db.DbConnect;
@@ -32,7 +34,7 @@ public class OrderDao {
         return orderCount;
     }
 
-	// insert
+	// 주문 생성
 	public void insertOrder(OrderDto dto) {
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
@@ -60,7 +62,7 @@ public class OrderDao {
 		}
 	}
 	
-	//주문번호에 대한 dto반환
+	// 주문번호에 대한 dto반환
 	public OrderDto getOneData(String num){
 		OrderDto dto=new OrderDto();
 		
@@ -96,4 +98,41 @@ public class OrderDao {
 		
 		return dto;
 	}
+	
+	// 모든 주문을 가져오는 메서드
+    public List<OrderDto> getAllOrders() {
+        List<OrderDto> orderList = new ArrayList<>();
+        Connection conn = db.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM order_info";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            // 결과를 OrderDto 객체로 변환하여 리스트에 추가
+            while (rs.next()) {
+                OrderDto order = new OrderDto();
+                order.setOrderNum(rs.getString("order_num"));
+                order.setMemNum(rs.getString("mem_num"));
+                order.setOrderDate(rs.getTimestamp("order_date"));
+                order.setOrderStatus(rs.getString("order_status"));
+                order.setOrderDeliveryRequest(rs.getString("order_delivery_request"));
+                order.setOrderAddr(rs.getString("order_addr"));
+                order.setOrderName(rs.getString("order_name"));
+                order.setOrderHp(rs.getString("order_hp"));
+                order.setOrderDeliveryFee(rs.getInt("order_delivery_fee"));
+                order.setOrderTotalPayment(rs.getInt("order_total_payment"));
+                orderList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            db.dbClose(rs, pstmt, conn);
+        }
+
+        return orderList;
+    }
 }

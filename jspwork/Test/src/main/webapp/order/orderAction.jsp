@@ -10,7 +10,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-String orderStatus = ""; // 주문상태
+String orderStatus = ""; // 주문상태 변수 선언
 	
 // 주문 정보 파라미터 받기
 String memNum = request.getParameter("mem_num"); // 회원번호
@@ -39,14 +39,14 @@ if (paymentMethod.equals("credit_card")) {
 <!-- 포트원 결제 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
-	IMP.init('imp30782762');
+	IMP.init('imp30782762'); // IAMPORT 결제 모듈 초기화
 
-	IMP.request_pay({
+	IMP.request_pay({ // 결제 요청
 		pg : "html5_inicis.INIpayTest",
-		pay_method : "card",
+		pay_method : "card", // 결제 수단
 		merchant_uid : "<%=newOrderNumber%>", // 주문번호
-		name : "주문명:결제테스트",
-		amount : <%=orderTotalPayment%>,
+		name : "주문명:결제테스트", // 주문명
+		amount : <%=orderTotalPayment%>, // 결제 금액
 		//구매자 정보 ↓
 		buyer_email : "gildong@gmail.com",
 		buyer_name : "홍길동",
@@ -54,9 +54,8 @@ if (paymentMethod.equals("credit_card")) {
 		buyer_addr : "서울특별시 강남구 신사동",
 		buyer_postcode : "01181"
 	}, function(rsp) {
-		// callback
-		//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-		if (rsp.success) { // 결제 성공 시
+		// 결제 결과 콜백 함수
+		if (rsp.success) { // 결제 성공 시 로직
             <%
             orderStatus = "결제완료";
             //OrderDto 객체 생성 및 데이터 설정
@@ -86,8 +85,9 @@ if (paymentMethod.equals("credit_card")) {
             %>
             // 결제 성공 후 리다이렉트
             location.href="orderComplete.jsp?orderNumber=<%= newOrderNumber %>";
-        } else {
-        	 console.log(rsp);
+        } else { // 결제 실패 시
+        	 console.log(rsp); 
+        	 alert(rsp.error_msg); 
         }
 	});
 </script>
@@ -121,7 +121,6 @@ if (paymentMethod.equals("credit_card")) {
 	OrderDetailDao orderDetailDao = new OrderDetailDao();
 	orderDetailDao.insertOrder(orderDetailDto);
 	
-	//주문 처리 후 리다이렉트 또는 메시지 출력 등 후속 처리
-	response.sendRedirect("orderComplete.jsp?orderNumber=" + newOrderNumber);
+	response.sendRedirect("orderComplete.jsp?orderNumber=" + newOrderNumber); // 주문 완료 페이지로 리다이렉트
 }
 %>
