@@ -20,6 +20,30 @@ public class OrderDto {
     private String productColor;
     private int productSu;
     
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductSize() {
+		return productSize;
+	}
+	public void setProductSize(String productSize) {
+		this.productSize = productSize;
+	}
+	public String getProductColor() {
+		return productColor;
+	}
+	public void setProductColor(String productColor) {
+		this.productColor = productColor;
+	}
+	public int getProductSu() {
+		return productSu;
+	}
+	public void setProductSu(int productSu) {
+		this.productSu = productSu;
+	}
 	public String getOrderNum() {
 		return orderNum;
 	}

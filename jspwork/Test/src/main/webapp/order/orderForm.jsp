@@ -1,3 +1,6 @@
+<%@page import="data.dto.Cart"%>
+<%@page import="java.util.List"%>
+<%@page import="data.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,6 +50,10 @@
 <body>
 <h2>주문/결제</h2>
 
+<% 
+	// mem_num 파라미터로부터 회원 번호를 가져옴
+    String memNum = request.getParameter("mem_num");
+%>
 <!-- 주문 정보를 입력받는 폼 -->
 <form action="orderAction.jsp" method="post">  
     <h3>배송지</h3>
@@ -60,6 +67,26 @@
     <input type="text" id="detailAddress" name="order_address_detail" placeholder="상세주소" required><br>
     
     배송메세지: <textarea name="order_delivery_request"></textarea><br>
+    
+    <h3>주문상품</h3>
+    <%
+        // OrderDao를 사용하여 회원의 장바구니에 담긴 상품 정보를 가져옴
+        OrderDao orderDao = new OrderDao();
+        List<Cart> cartItems = orderDao.getCartItemsByMember(memNum);
+        
+        // 가져온 상품 정보를 화면에 표시
+        for (Cart cartItem : cartItems) {
+    %>
+        <div>
+            상품명: <%= cartItem.getProName() %><br>
+            사이즈: <%= cartItem.getCartSize() %><br>
+            색상: <%= cartItem.getCartColor() %><br>
+            수량: <%= cartItem.getCartSu() %><br><br>
+        </div>
+    <%
+        }
+    %>
+    
     
     <h3>결제 수단</h3>
     <input type="radio" name="payment_method" value="credit_card" onclick="showBankInfo()" required>신용카드<br>
