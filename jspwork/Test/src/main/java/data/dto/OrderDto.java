@@ -19,7 +19,7 @@ public class OrderDto {
     private String productSize;
     private String productColor;
     private int productSu;
-    
+
 	public String getProductName() {
 		return productName;
 	}

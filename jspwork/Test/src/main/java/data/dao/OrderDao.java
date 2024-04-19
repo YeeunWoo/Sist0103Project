@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.dto.Cart;
+import data.dto.CartDto;
 import data.dto.OrderDto;
 import mysql.db.DbConnect;
 
@@ -175,15 +175,15 @@ public class OrderDao {
         return orderList;
     }
     
-    public List<Cart> getCartItemsByMember(String memNum) {
-        List<Cart> cartItems = new ArrayList<>();
+    public List<CartDto> getCartItemsByMember(String memNum) {
+        List<CartDto> cartItems = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
             conn = db.getConnection();
-            String query = "SELECT pro.pro_name, cart.cart_size, cart.cart_color, cart.cart_su " +
+            String query = "SELECT pro.pro_name, pro.pro_main_img, cart.cart_size, cart.cart_color, cart.cart_su " +
                            "FROM cart " +
                            "JOIN product AS pro ON cart.pro_num = pro.pro_num " +
                            "WHERE cart.mem_num = ?";
@@ -197,9 +197,9 @@ public class OrderDao {
                 String color = rs.getString("cart_color");
                 int quantity = rs.getInt("cart_su");
 
-                Cart cartItem = new Cart(0, 0, 0, size, color, quantity);
-                cartItem.setProName(productName);
-                cartItems.add(cartItem);
+                //CartDto cartItem = new CartDto(0, 0, 0, size, color, quantity);
+                //cartItem.setProName(productName);
+                //cartItems.add(cartItem);
             }
         } catch (SQLException e) {
             e.printStackTrace();

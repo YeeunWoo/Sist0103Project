@@ -1,4 +1,4 @@
-<%@page import="data.dto.Cart"%>
+<%@page import="data.dto.CartDto"%>
 <%@page import="java.util.List"%>
 <%@page import="data.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -50,14 +50,13 @@
 <body>
 <h2>주문/결제</h2>
 
-<% 
-	// mem_num 파라미터로부터 회원 번호를 가져옴
+<%
+// mem_num 파라미터로부터 회원 번호를 가져옴
     String memNum = request.getParameter("mem_num");
 %>
 <!-- 주문 정보를 입력받는 폼 -->
 <form action="orderAction.jsp" method="post">  
     <h3>배송지</h3>
-    회원번호: <input type="text" name="mem_num" required><br>
     받는 사람: <input type="text" name="order_name" required><br>
     휴대폰: <input type="text" name="order_hp" required><br>
     <!-- 우편번호 찾기 기능 -->
@@ -70,18 +69,21 @@
     
     <h3>주문상품</h3>
     <%
-        // OrderDao를 사용하여 회원의 장바구니에 담긴 상품 정보를 가져옴
-        OrderDao orderDao = new OrderDao();
-        List<Cart> cartItems = orderDao.getCartItemsByMember(memNum);
-        
-        // 가져온 상품 정보를 화면에 표시
-        for (Cart cartItem : cartItems) {
+    // OrderDao를 사용하여 회원의 장바구니에 담긴 상품 정보를 가져옴
+            OrderDao orderDao = new OrderDao();
+            List<CartDto> cartItems = orderDao.getCartItemsByMember(memNum);
+            
+            // 가져온 상품 정보를 화면에 표시
+            for (CartDto cartItem : cartItems) {
     %>
         <div>
-            상품명: <%= cartItem.getProName() %><br>
-            사이즈: <%= cartItem.getCartSize() %><br>
-            색상: <%= cartItem.getCartColor() %><br>
-            수량: <%= cartItem.getCartSu() %><br><br>
+        	<div style="float: left; margin-right: 10px;">
+                <img src="https://via.placeholder.com/100" width="100" height="100">
+            </div>
+            상품명: <%=  %><br>
+            사이즈: <%=  %><br>
+            색상: <%=  %><br>
+            수량: <%=  %><br><br>
         </div>
     <%
         }
