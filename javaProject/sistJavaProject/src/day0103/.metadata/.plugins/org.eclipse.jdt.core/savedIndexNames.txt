@@ -1,0 +1,1 @@
+INDEX VERSION 1.134+C:\sist0103\work\javaProject\sistJavaProject\src\day0103\.metadata\.plugins\org.eclipse.jdt.core
