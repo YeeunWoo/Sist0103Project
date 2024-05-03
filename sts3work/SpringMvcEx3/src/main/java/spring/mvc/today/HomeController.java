@@ -56,7 +56,7 @@ public class HomeController {
 		return "orangeResult";
 	}
 	
-	@GetMapping("/shop/detail") //today/shop/detail
+	@GetMapping("/shop/detail") // today/shop/detail
 	public String resShop() {
 		
 		return "resResult";
