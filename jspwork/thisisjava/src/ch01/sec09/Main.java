@@ -1,11 +1,23 @@
 package ch01.sec09;
 
+import java.util.Scanner;
+
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("|\\_/|");
-		System.out.println("|q p|   /}");
-		System.out.println("( 0 )\"\"\"\\");
-		System.out.println("|\"^\"`    |");
-		System.out.println("||_/=\\\\__|");
+		Scanner sc = new Scanner(System.in);
+
+		int x = sc.nextInt();
+		int y = sc.nextInt();
+
+		if (x > 0 && y > 0) {
+			System.out.println("1");
+		} else if (x < 0 && y > 0) {
+			System.out.println("2");
+		} else if (x < 0 && y < 0) {
+			System.out.println("3");
+		} else if (x > 0 && y < 0) {
+			System.out.println("4");
+		}
+
 	}
 }
