@@ -39,7 +39,7 @@
 </head>
 <body>
 <div style="margin: 100px auto; width: 500px;">
-   <form action="" method="post">
+   <form action="insert" method="post">
      <table class="table table-bordered">
         <caption align="top"><b>회원가입</b></caption>
         <tr>
