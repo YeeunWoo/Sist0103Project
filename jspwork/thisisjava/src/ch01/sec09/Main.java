@@ -1,21 +1,16 @@
 package ch01.sec09;
 
-import java.util.Scanner;
-
 public class Main {
 	public static void main(String[] args) {
-		
-		Scanner sc = new Scanner(System.in);
-		
-		int H = sc.nextInt();
-		int M = sc.nextInt();
-		int X = sc.nextInt();
-		int total = H*60+M+X;
-		H = total/60;
-		if(H>=24)
-			H-=24;
-		M = total%60;
-		System.out.println(H + " " + M);
-		
+
+		int A = ((int) (Math.random() * 7))+1;
+		int B = ((int) (Math.random() * 7))+1;
+		int C = ((int) (Math.random() * 7))+1;
+		int money = 0;
+		if(A==B && B==C) {
+			money = 10000+A*1000;
+		} else if((A==B && B!=C)||(A!=B && B==C)){
+			
+		}
 	}
 }

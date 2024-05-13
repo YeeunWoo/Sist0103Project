@@ -104,6 +104,9 @@ public class BoardController {
 	//상세보기로 가기
 	@GetMapping("/content")
 	public String content() {
+		
+		
+		
 		return "board/content";
 	}
 	
