@@ -6,51 +6,33 @@ import java.io.FileInputStream;
 public class Solution {
 	public static void main(String[] args) throws Exception {
 		System.setIn(new FileInputStream("src/ch01/sec11/input.txt"));
-		Scanner scanner = new Scanner(System.in);
-        int T = scanner.nextInt();  // 테스트 케이스 수 입력 받기
-        
-        for (int test_case = 1; test_case <= T; test_case++) {
-            int N = scanner.nextInt();  // 배열 A의 길이
-            int M = scanner.nextInt();  // 배열 B의 길이
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
 
-            int[] A = new int[N];
-            int[] B = new int[M];
+		for (int test_case = 1; test_case <= T; test_case++) {
+			int N = sc.nextInt();
+			int[][] arr = new int[N][N];
 
-            for (int i = 0; i < N; i++) {
-                A[i] = scanner.nextInt();
-            }
-            for (int i = 0; i < M; i++) {
-                B[i] = scanner.nextInt();
-            }
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j <= i; j++) {
+					if (j == 0 || j == i) {
+						arr[i][j] = 1;
+					} else {
+						arr[i][j] = arr[i - 1][j - 1] + arr[i - 1][j];
+					}
+				}
+			}
 
-            int maxSum = 0;
-            // 길이가 짧은 배열을 움직이는 방식으로 비교
-            if (N <= M) {
-                for (int i = 0; i <= M - N; i++) {
-                    int sum = 0;
-                    for (int j = 0; j < N; j++) {
-                        sum += A[j] * B[i + j];
-                    }
-                    if (sum > maxSum) {
-                        maxSum = sum;
-                    }
-                }
-            } else {
-                for (int i = 0; i <= N - M; i++) {
-                    int sum = 0;
-                    for (int j = 0; j < M; j++) {
-                        sum += A[i + j] * B[j];
-                    }
-                    if (sum > maxSum) {
-                        maxSum = sum;
-                    }
-                }
-            }
+			System.out.println("#" + test_case);
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j <= i; j++) {
+					System.out.print(arr[i][j]+ " ");
+				}
+				System.out.println();
+			}
 
-            // 결과 출력
-            System.out.println("#" + test_case + " " + maxSum);
-        }
+		}
 
-        scanner.close();
+		sc.close();
 	}
 }
