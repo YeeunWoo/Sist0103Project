@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="utf-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&family=Gaegu&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<div style="margin: 100px auto; width: 800px;">
+		<h3 class="alert alert-secondary">MyCar 목록 출력</h3>
+		<br>
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-outline-secondary" onclick="location.href='writeform'">자동차정보등록</button>
+		</div>
+		<br>
+		<h5>
+			<b>총 [[${totalcount}]]개의 자동차 정보가 등록되었습니다</b>			
+		</h5>
+		<hr>
+		<table class="table table-bordered">
+			<tr class="table-light">
+				<th>번호</th>
+				<th>자동차명</th>
+				<th>색상</th>
+				<th>단가</th>
+			</tr>
+			<!-- list반복문 -->
+			<tr th:each="dto,iter:${list}">
+				<td>[[${iter.count}]]</td>
+				<td>
+					<a>
+						<img th:src="@{|/save/${dto.carphoto}|}" style="width: 40px;">[[${dto.carname}]]
+					</a>
+				</td>
+				<td th:style="'background-color:'+${dto.carcolor}"></td>
+				<td><span th:text="${#numbers.formatInteger(dto.carprice,0,'COMMA')}"></span></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
