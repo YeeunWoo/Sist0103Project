@@ -20,8 +20,8 @@ public class MyCarDao {
 
 	// 전체출력
 	public List<MyCarDto> getAllCars() {
-		return daoInter.findAll();
-		// return daoInter.findAll(Sort.by(Sort.Direction.DESC, "carprice"));// 비싼 것 부터
+		// return daoInter.findAll();
+		return daoInter.findAll(Sort.by(Sort.Direction.DESC, "carprice"));// 비싼 것 부터
 		// 출력
 	}
 
@@ -35,5 +35,14 @@ public class MyCarDao {
 
 	public void updateMyCar(MyCarDto dto) {
 		daoInter.save(dto); // num 포함이므로 수정
+	}
+
+	public void updateMycarNoPhoto(MyCarDto dto) {
+		Long num = dto.getNum();
+		String carname = dto.getCarname();
+		String carcolor = dto.getCarcolor();
+		String carprice= dto.getCarprice();
+		
+		daoInter.updateMycarNoPhoto(num, carname, carprice, carcolor);
 	}
 }

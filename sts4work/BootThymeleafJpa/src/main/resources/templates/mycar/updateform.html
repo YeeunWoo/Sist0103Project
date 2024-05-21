@@ -9,6 +9,42 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<div style="margin: 100px auto; width: 500px;">
+		<form action="update" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="num" th:value="${dto.num}">
+			<table class="table table-bordered">
+				<tr>
+					<th>자동차명</th>
+					<td>
+						<input type="text" name="carname" required="required" th:value="${dto.carname}">
+					</td>
+				</tr>
+				<tr>
+					<th>자동차색상</th>
+					<td>
+						<input type="color" name="carcolor" required="required" th:value="${dto.carcolor}">
+					</td>
+				</tr>
+				<tr>
+					<th>자동차가격</th>
+					<td>
+						<input type="text" name="carprice" required="required" th:value="${dto.carprice}">
+					</td>
+				</tr>
+				<tr>
+					<th>자동차사진</th>
+					<td>
+						<input type="file" name="upload">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="btn btn-secondary">목록</button>
+						<button type="submit" class="btn btn-outline-secondary">수정</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>
