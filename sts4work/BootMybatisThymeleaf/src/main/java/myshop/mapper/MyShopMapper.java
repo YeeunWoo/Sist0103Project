@@ -10,7 +10,12 @@ import myshop.dto.ShopDto;
 @Mapper
 public interface MyShopMapper {
 	public int getTotalCount();
+
 	public void insertShop(ShopDto dto);
+
 	@Select("select * from myshop order by num asc")
 	public List<ShopDto> getAllSangpums();
+
+	@Select("select * from myshop where num=#{num}")
+	public ShopDto getData(int num);
 }

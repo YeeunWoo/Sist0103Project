@@ -57,4 +57,10 @@ public class MyShopController {
 		shopService.insertShop(dto);
 		return "redirect:./";
 	}
+	
+//	@GetMapping("/detail")
+//	public String detail(@RequestParam int num, Model model) {
+//		ShopDto dto = shopService.getData(num);
+//		model.addAttribute("dto",dto);
+//	}
 }
