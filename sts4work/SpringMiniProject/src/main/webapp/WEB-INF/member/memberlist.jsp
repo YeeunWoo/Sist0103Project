@@ -15,5 +15,6 @@
 </head>
 <body>
 <h1>memberlist</h1>
+${mcount }명의 회원이 있습니다
 </body>
 </html>

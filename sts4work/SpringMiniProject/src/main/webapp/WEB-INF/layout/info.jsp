@@ -16,9 +16,9 @@
 <title>Insert title here</title>
 </head>
 <c:set var="root" value="<%=request.getContextPath()%>" /><body>
-	<i class="bi bi-telephone"></i>$nbsp;쌍용교육센터<br>
-	<i class="bi bi-envelope"></i>$nbsp;sist@naver.com<br>
-	<i class="bi bi-house"></i>$nbsp;강남<br>
-	<i class="bi bi-instagram"></i>$nbsp;sist<br>
+	<i class="bi bi-telephone"></i>&nbsp;쌍용교육센터<br>
+	<i class="bi bi-envelope"></i>&nbsp;sist@naver.com<br>
+	<i class="bi bi-house"></i>&nbsp;강남<br>
+	<i class="bi bi-instagram"></i>&nbsp;sist<br>
 </body>
 </html>

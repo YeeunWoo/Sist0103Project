@@ -15,10 +15,12 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
+<style type="text/css">
+</style>
 </head>
 <body>
 	<c:set var="root" value="<%=request.getContextPath()%>" />
-	<a href="/"><img src="${root }/image/a02.png"> <b>SpringBoot+Mybatis+Tiles3</b></a>
+	<a href="/"><img src="${root }/image/a03.png" width="100"> <b>SpringBoot+Mybatis+Tiles3</b></a>
 
 </body>
 </html>

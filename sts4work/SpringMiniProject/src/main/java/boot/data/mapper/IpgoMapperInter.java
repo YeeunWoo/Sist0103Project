@@ -14,4 +14,8 @@ public interface IpgoMapperInter {
 	public void insertIpgo(IpgoDto dto);
 
 	public List<IpgoDto> getAllDatas();
+	
+	public IpgoDto getData(String num);
+	
+	public void updateIpgo(IpgoDto dto);
 }

@@ -18,24 +18,27 @@
 <style type="text/css">
 ul.menu {
 	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
 }
 
 ul.menu li {
 	width: 130px;
-	float: left;
-	border: 1px solid gray;
 	height: 60px;
 	text-align: center;
 	line-height: 60px;
-	margin-right: 10px;
-	font-size: 24px;
-	background-color: #ffc;
+	font-size: 20px;
+	background-color: #d0d0d0;
 	cursor: pointer;
 }
 
 ul.menu li a {
 	color: black;
 	text-decoration: none;
+	display: block;
+	height: 100%;
+	width: 100%;
 }
 </style>
 </head>
