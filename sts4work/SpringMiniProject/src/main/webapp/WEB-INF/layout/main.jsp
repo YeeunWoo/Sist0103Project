@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 </head>
-<c:set var="root" value="<%=request.getContextPath()%>" /><body>
-<img src="${root }/image/m02.jpg" width="500">
-<h2><b>Main Page입니다</b></h2>
+<c:set var="root" value="<%=request.getContextPath()%>" />
+<body>
+	<h2>
+		<b>Main Page입니다</b>
+	</h2>
+	<img src="${root }/image/m02.jpg" width="500">
 </body>
 </html>

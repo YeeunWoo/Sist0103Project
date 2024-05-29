@@ -14,6 +14,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<div>
+		<img src="${root }/image/mainImg.png" width="200" align="left" hspace="20">
+		<br>
+		<b>님 로그인중</b><br>
+		<button type="button" class="btn btn-secondary" onclick="location.href='logoutprocess'">로그아웃</button>		
+	</div>
 </body>
 </html>

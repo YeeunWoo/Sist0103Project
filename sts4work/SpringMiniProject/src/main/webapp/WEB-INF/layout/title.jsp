@@ -16,11 +16,36 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+   div.login{
+     position: absolute;
+     left: 1100px;
+     top: 40px;
+     width: 350px;
+   }
+   div.login{
+     position: absolute;
+     left: 1100px;
+     top: 40px;
+     width: 350px;
+   }
 </style>
 </head>
 <body>
 	<c:set var="root" value="<%=request.getContextPath()%>" />
-	<a href="/"><img src="${root }/image/a03.png" width="100"> <b>SpringBoot+Mybatis+Tiles3</b></a>
-
+	<div><a href="/"><img src="${root }/image/a03.png" width="100"> <b>SpringBoot+Mybatis+Tiles3</b></a></div>
+	
+	<div class="login" style="text-align: right;">
+	<c:if test="${sessionScope.loginok==null }">
+		<button type="button" class="btn btn-secondary" style="width: 80px;" onclick="location.href='${root}/login/main'">Login</button>
+	</c:if>
+	<c:if test="${sessionScope.loginok!=null }">
+		<button type="button" class="btn btn-warning" style="width: 80px;" onclick="location.href='${root}/login/logoutprocess'">Logout</button>	
+	</c:if>	
+	</div>
+	
+	<!-- ajax 로그인 모달폼 -->
+	<div>
+	
+	</div>
 </body>
 </html>
