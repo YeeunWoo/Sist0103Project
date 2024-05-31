@@ -29,49 +29,62 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
-
+	
+	
 	@GetMapping("/member/list")
-	public ModelAndView list() {
-
-		ModelAndView mview = new ModelAndView();
-		List<MemberDto> list = service.getAllMembers();
+	public ModelAndView list()
+	{
+		ModelAndView mview=new ModelAndView();
+		
+		List<MemberDto> list=service.getAllMembers();
+		
 		mview.addObject("list", list);
 		mview.addObject("mcount", list.size());
-
+		
 		mview.setViewName("/member/memberlist");
 		return mview;
 	}
-
+	
 	@GetMapping("/member/form")
-	public String form() {
+	public String form()
+	{
 		return "/member/memberform";
 	}
-
-	// id체크
+	
+	
+	//id체크
 	@GetMapping("/member/idcheck")
 	@ResponseBody
-	public Map<String, Integer> idcheckprocess(@RequestParam String id) {
-		Map<String, Integer> map = new HashMap<>();
-
-		// id 체크 메서드 호출
-		int n = service.getSearchId(id);
-
-		map.put("count", n); // 1 or 0
+	public Map<String, Integer> idcheckprocess(@RequestParam String id)
+	{
+		Map<String, Integer> map=new HashMap<>();
+		
+		//id 체크 메서드 호출
+		int n=service.getSearchId(id);
+		
+		map.put("count", n);  //1  or 0
 		return map;
 	}
-
-	// insert
+	
+	//insert
 	@PostMapping("/member/insert")
-	public String insert(@ModelAttribute MemberDto dto, MultipartFile myphoto, HttpSession session) {
-		String path = session.getServletContext().getRealPath("/memberphoto");
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String fileName = sdf.format(new Date()) + myphoto.getOriginalFilename();
+	public String insert(@ModelAttribute MemberDto dto,
+			MultipartFile myphoto,
+			HttpSession session)
+	{
+		String path=session.getServletContext().getRealPath("/memberphoto");
+		
+		String myid=(String)session.getAttribute("myid");
+		String loginok=(String)session.getAttribute("loginok");
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileName=sdf.format(new Date())+myphoto.getOriginalFilename();
 		dto.setPhoto(fileName);
-
+		
 		try {
-			myphoto.transferTo(new File(path + "\\" + fileName));
-
+			myphoto.transferTo(new File(path+"\\"+fileName));
+			service.insertMember(dto);
+			
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,74 +92,83 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		service.insertMember(dto);
-		return "redirect:list";
+		
+		/*if(loginok==null || myid!=null)
+			return "/member/gaipsuccess";
+		else*/
+		    return "redirect:list";
+		
 	}
-
-	// 회원정보로 가기
+	
+	//회원정보로 가기
 	@GetMapping("/member/myinfo")
-	public String myinfo(Model model) {
-		List<MemberDto> list = service.getAllMembers();
+	public String myinfo(Model model)
+	{
+		List<MemberDto> list=service.getAllMembers();
 		model.addAttribute("list", list);
 		return "/member/memberinfo";
 	}
+	
 	//회원목록 삭제
-		@GetMapping("/member/delete")
-		@ResponseBody
-		public void deleteMember(String num)
-		{
-			service.deleteMember(num);
-		}
+	@GetMapping("/member/delete")
+	@ResponseBody
+	public void deleteMember(String num)
+	{
+		service.deleteMember(num);
+	}
+	
+	@PostMapping("/member/updatephoto")
+	@ResponseBody
+	public void photoUpload(String num,MultipartFile photo,HttpSession session)
+	{
+		String path=session.getServletContext().getRealPath("/memberphoto");
 		
-		@PostMapping("/member/updatephoto")
-		@ResponseBody
-		public void photoUpload(String num,MultipartFile photo,HttpSession session)
-		{
-			String path=session.getServletContext().getRealPath("/memberphoto");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileName=sdf.format(new Date())+photo.getOriginalFilename();
+		
+		try {
+			photo.transferTo(new File(path+"\\"+fileName));
 			
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-			String fileName=sdf.format(new Date())+photo.getOriginalFilename();
+			service.updatePhoto(num, fileName); //db업데이트
 			
-			try {
-				photo.transferTo(new File(path+"\\"+fileName));
-				
-				service.updatePhoto(num, fileName); //db업데이트
-				
-				//세션의 사진변경
-				session.setAttribute("loginphoto", fileName);
-				
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//세션의 사진변경
+			session.setAttribute("loginphoto", fileName);
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
+	
+	//수정폼에 출력할 데이타 반환
+	@GetMapping("/member/updateform")
+	@ResponseBody
+	public MemberDto getData(String num)
+	{
+		return service.getDataByNum(num);
+	}
+	
+	//수정
+	@PostMapping("/member/update")
+	@ResponseBody
+	public void update(MemberDto dto)
+	{
+		service.updateMember(dto);
+	}
+	
+	
+	//탈퇴
+	@GetMapping("/member/deleteme")
+	@ResponseBody
+	public void deleteme(String num,HttpSession session)
+	{
+		service.deleteMember(num);
 		
-		//수정폼에 출력할 데이타 반환
-		@GetMapping("/member/updateform")
-		@ResponseBody
-		public MemberDto getData(String num)
-		{
-			return service.getDataByNum(num);
-		}
+		session.removeAttribute("loginok");
+		session.removeAttribute("myid");
 		
-		//수정
-		@PostMapping("/member/update")
-		@ResponseBody
-		public void update(MemberDto dto)
-		{
-			service.updateMember(dto);
-		}
-		
-		//탈퇴
-		@GetMapping("/member/deleteme")
-		@ResponseBody
-		public void deleteme(String num, HttpSession session) {
-			service.deleteMember(num);
-			session.removeAttribute("loginok");
-			session.removeAttribute("myid");
-		}
+	}
 }

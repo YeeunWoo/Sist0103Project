@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @Alias("MemberDto")
 public class MemberDto {
+
 	private String num;
 	private String name;
 	private String id;
@@ -18,4 +19,5 @@ public class MemberDto {
 	private String addr;
 	private String email;
 	private Timestamp gaipday;
+	
 }

@@ -15,10 +15,16 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 </head>
-<c:set var="root" value="<%=request.getContextPath()%>" /><body>
-	<i class="bi bi-telephone"></i>&nbsp;쌍용교육센터<br>
-	<i class="bi bi-envelope"></i>&nbsp;sist@naver.com<br>
-	<i class="bi bi-house"></i>&nbsp;강남<br>
-	<i class="bi bi-instagram"></i>&nbsp;sist<br>
+<c:set var="root" value="<%=request.getContextPath()%>" />
+<body>
+	<i class="bi bi-telephone"></i>&nbsp;쌍용교육센터
+	<br>
+	<i class="bi bi-envelope"></i>&nbsp;sist@naver.com
+	<br>
+	<i class="bi bi-house"></i>&nbsp;강남
+	<br>
+	<i class="bi bi-instagram"></i>&nbsp;sist
+	<br>
+	
 </body>
 </html>

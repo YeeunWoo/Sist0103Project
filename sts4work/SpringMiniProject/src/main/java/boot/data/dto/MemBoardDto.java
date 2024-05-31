@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 @Alias("MemBoardDto")
 public class MemBoardDto {
+
 	private String num;
 	private String myid;
 	private String name;
@@ -19,4 +20,5 @@ public class MemBoardDto {
 	private MultipartFile upload;
 	private int readcount;
 	private Timestamp writeday;
+	
 }

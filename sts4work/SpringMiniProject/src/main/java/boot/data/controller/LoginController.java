@@ -19,51 +19,66 @@ public class LoginController {
 
 	@Autowired
 	MemberService service;
-
-	@GetMapping("/form")
-	public String form() {
-		return "/login/loginform";
-	}
-
+	
 	@GetMapping("/main")
-	public String form(HttpSession session, Model model) {
-		// 폼의 아이디 얻기
-		String myid = (String) session.getAttribute("myid");
-
-		// 로그인 중인지 아닌지
-		String loginok = (String) session.getAttribute("loginok");
-
-		// 한 번도 실행 안 하면 null
-		if (loginok == null)
+	public String form(HttpSession session,Model model)
+	{
+		//폼의 아이디얻어줌
+		String myid=(String)session.getAttribute("myid");
+		//로그인중인지 아닌지
+		String loginok=(String)session.getAttribute("loginok");
+		
+		//한번도 실행안하면 null
+		if(loginok==null)
 			return "/login/loginform";
 		else {
-			String name = service.getName(myid);
+			
+			String name=service.getName(myid);
 			model.addAttribute("name", name);
 			return "/login/logoutform";
 		}
+		
 	}
-
+	
+	
+	
 	@PostMapping("/loginprocess")
-	public String loginprocess(@RequestParam String id, @RequestParam String pass,
-			@RequestParam(required = false) String cbsave, HttpSession session, Model model) {
-		int check = service.loginIdPassCheck(id, pass);
-		if (check == 1) {
-			session.setMaxInactiveInterval(60 * 60 * 8); // 8시간 동안 유지
+	public String loginprocess(@RequestParam String id,
+			@RequestParam String pass,
+			@RequestParam(required = false) String cbsave,
+			HttpSession session,Model model)
+	{
+		
+		int check=service.loginIdPassCheck(id, pass);
+		
+		if(check==1) {
+			
+			session.setMaxInactiveInterval(60*60*8); //8시간
+			
 			session.setAttribute("myid", id);
 			session.setAttribute("loginok", "yes");
 			session.setAttribute("saveok", cbsave);
-
-			MemberDto mdto = service.getDataById(id);
+			
+			MemberDto mdto=service.getDataById(id);
+			
 			session.setAttribute("loginphoto", mdto.getPhoto());
+			
 			return "redirect:main";
-		} else {
+			
+		}else {
 			return "/member/passfail";
 		}
+		
+		
 	}
-
+	
 	@GetMapping("/logoutprocess")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session)
+	{
 		session.removeAttribute("loginok");
 		return "redirect:main";
 	}
+	
+	
+	
 }
