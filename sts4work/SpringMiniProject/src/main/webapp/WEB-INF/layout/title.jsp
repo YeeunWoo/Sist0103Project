@@ -65,8 +65,8 @@ div.login {
 
 	<div class="container mt-3">
 
-		<c:if test="${sessionScope.loginok==null }">
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+		<c:if test="${sessionScope.loginok==null }">1
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal"1
 				data-bs-target="#myModal" id="btnlogin">Ajax</button>
 		</c:if>
 
