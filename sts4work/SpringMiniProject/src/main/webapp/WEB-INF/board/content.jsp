@@ -22,7 +22,7 @@
                <fmt:formatDate value="${dto.writeday }" pattern="yyyy-MM-dd HH:mm"/>
             </span>
             </h3>
-            <span>작성자  ${dto.name }(${dto.myid })</span>
+            <span>작성자: ${dto.name }(${dto.myid })</span>
             
             
             <c:if test="${dto.uploadfile!='no' }">
