@@ -13,4 +13,4 @@ public interface MyCarCommentDaoInter extends JpaRepository<MyCarCommentDto, Int
 	// num에 해당하는 댓글목록
 	@Query(value = "select * from mycar_comment where num=:num order by idx desc", nativeQuery = true)
 	public List<MyCarCommentDto> getMyCarCommentList(@Param("num") Long num);
-}
+ }
