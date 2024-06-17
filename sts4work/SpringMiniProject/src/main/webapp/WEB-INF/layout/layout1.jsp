@@ -67,7 +67,7 @@
 		<div class="info">
 			<tiles:insertAttribute name="info" />
 		</div>
-		<div class="main">
+		<div class="main"> 
 			<tiles:insertAttribute name="main" />
 		</div>
 	</div>
