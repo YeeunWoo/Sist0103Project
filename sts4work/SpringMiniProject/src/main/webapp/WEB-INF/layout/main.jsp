@@ -19,7 +19,7 @@
 <c:set var="root" value="<%=request.getContextPath()%>" />
 <body>
 	<h2>
-		<b>Main Page입니다 </b>
+		<b>Main Page입니다    </b>
 	</h2>
 	<img src="${root }/image/m02.jpg" width="500">
 </body>
