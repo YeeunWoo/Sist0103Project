@@ -24,7 +24,7 @@ public class MyCarCommentController {
 		// 먼저 MyCarDto에 num값을 넣은 후 MyCarCommentDto에 넣어준다(외부키로 지정된 값)
 		MyCarDto dto = MyCarDto.builder().num(num).build();
 
-		// dto에 값 지정
+		// dto에 값 지정  
 		MyCarCommentDto commentDto = MyCarCommentDto.builder().comment(comment).mycar(dto).build();
 
 		// db insert
