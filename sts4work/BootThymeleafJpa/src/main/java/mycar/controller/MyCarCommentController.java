@@ -30,7 +30,7 @@ public class MyCarCommentController {
 		// db insert
 		commentDao.insertCommentMyCar(commentDto);
 	}
-
+    
 	// 부모 글에 달린 댓글 반환
 	@GetMapping("/commentlist")
 	public List<MyCarCommentDto> commentList(@RequestParam Long num) {
