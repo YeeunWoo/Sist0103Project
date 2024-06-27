@@ -21,12 +21,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+@Data    
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "mycar_comment")         
+@Table(name = "mycar_comment")           
 public class MyCarCommentDto {
 
 	@Id
