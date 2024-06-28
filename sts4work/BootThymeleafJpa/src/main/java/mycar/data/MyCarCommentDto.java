@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "mycar_comment")           
+@Table(name = "mycar_comment")             
 public class MyCarCommentDto {
 
 	@Id
