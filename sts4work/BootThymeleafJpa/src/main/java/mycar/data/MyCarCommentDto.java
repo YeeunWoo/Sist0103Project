@@ -39,7 +39,7 @@ public class MyCarCommentDto {
 	private MyCarDto mycar;
 	
 	@Column
-	private String comment;       
+	private String comment;            
 
 	@Column(updatable = false)
 	@CreationTimestamp
